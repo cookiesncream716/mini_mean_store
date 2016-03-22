@@ -1,0 +1,9 @@
+{
+  "name": "orders_customers",
+  "dependencies": {
+    "body-parser": "latest",
+    "express": "~4.2.0",
+    "mongoose": "latest",
+    "mongoose-unique-validator": "^1.0.2"
+  }
+}
