@@ -1,3 +1,33 @@
-<div ng-controller='productController'>
+<div ng-controller='productsController'>
 	<h1>Products Page</h1>
+	<div class='col-md-3'>
+		<input type='text' ng-model='filter_name' placeholder='filter'>
+		<h4>Add a New Product</h4>
+		<form>
+			<div class='form-group'>
+				<label for='name'>Name:</label>
+				<input ng-model='newProduct.name' placeholder='name' type='text' class='form-control'>
+			</div>
+			<div class='form-group'>
+				<label for='image'>Image (url):</label>
+				<input ng-model='newProduct.image' placeholder='http://' type='text' class='form-control'>
+			</div>
+			<div class='form-group'>
+				<label for='description'>Description:</label>
+				<textarea ng-model='newProduct.description' rows='5' type='text' class='form-control'></textarea>
+			</div>
+			<div class='form-group'>
+				<label for='quantity'>Initial Quantiy:</label>
+				<input ng-model='newProduct.quantity' placeholder='1' type='text' class='form-control'>
+			</div>
+			<button ng-click='createProduct()' class='btn btn-primary'>Create</button>
+		</form>
+	</div>
+	<div class='col-md-8'>
+		<div ng-repeat='product in products | filter: filter_name' class='col-md-4'>
+			<img src="{{ product.image }}">
+			<p>{{ product.name }}</p>
+			<p>({{ product.quantity }} left)</p>
+		</div>
+	</div>
 </div>

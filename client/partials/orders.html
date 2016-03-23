@@ -21,7 +21,7 @@
 			</select>
 			<label for='product'>Product</label>
 			<select ng-model='newOrder.product'>
-				<option ng-repeat='product in products'>{{ product }}</option>
+				<option ng-repeat='product in products'>{{ product.name }}</option>
 			</select>
 		</div>
 		<button ng-click='createOrder()' class='btn btn-primary col-md-offset-5'>Order</button>

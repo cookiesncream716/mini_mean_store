@@ -39,11 +39,11 @@
 		 		factory.create = function(customer, callback){
 		 			$http.post('/customers', customer).success(function(output){
 		 				if(output.message != undefined){
-		 					console.log('error' + output.message);
+		 					// console.log('error' + output.message);
 		 					callback(output);
 		 				} else{
-		 					console.log('factory not error')
-		 					console.log(output.message + "here")
+		 					// console.log('factory not error')
+		 					// console.log(output.message + "here")
 		 					callback();
 		 					
 		 				}
@@ -84,6 +84,12 @@
 		 				callback(products);
 		 			});
 		 		};
+		 		factory.create = function(product, callback){
+		 			$http.post('/products', product).success(function(output){
+		 				callback();
+		 			});
+		 		};
+		 		return factory;
 		 	});
 
 		 	myApp.controller('customersController', function($scope, customerFactory){
@@ -93,9 +99,9 @@
 		 		$scope.createCustomer = function(){
 		 			customerFactory.create($scope.newCustomer, function(data){
 		 				$scope.newCustomer = {};
-		 				console.log('factory data' + data)
+		 				// console.log('factory data' + data)
 		 				if(data == undefined){
-		 					console.log('controller no error')
+		 					// console.log('controller no error')
 		 					customerFactory.index(function(data){
 		 						$scope.customers = data;
 		 					})
@@ -139,6 +145,14 @@
 		 		productFactory.index(function(data){
 		 			$scope.products = data;
 		 		});
+		 		$scope.createProduct = function(){
+		 			productFactory.create($scope.newProduct, function(data){
+		 				$scope.newProduct = {};
+		 				productFactory.index(function(data){
+		 					$scope.products = data;
+		 				});
+		 			});
+		 		}
 
 		 	})
 		 </script>
@@ -146,8 +160,9 @@
 	<body ng-app='myApp'>
 		<div class = 'container'>
 			<a href='#/'>Dashboard</a> | <a href='#/products'>Products</a> | <a href="#/orders">Orders</a> | <a href="#/customers">Customers</a> | <a href='#/'>Settings</a>
-		</div>
-		<div ng-view=''>
+		
+			<div ng-view=''>
+			</div>
 		</div>
 	</body>
 </html>
