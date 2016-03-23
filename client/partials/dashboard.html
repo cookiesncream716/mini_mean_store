@@ -1,1 +1,23 @@
-<h1>Dashboard</h1>
+<div ng-controller='dashboardsController'>
+	<div class='row'>
+		<input type='text' ng-model='filter_name' placeholder='filter'>
+		<div ng-repeat='product in products | filter: filter_name | limitTo:5' class='col-md-3'>
+			<img src="{{ product.image }}">
+			<p>{{ product.name }}</p>
+			<p>({{ product.quantity }} left)</p>
+		</div>
+		<a href='#/products'>show more</a>
+	</div>
+	<div class='row col-md-offset-4'>
+		<h4>Recent Orders</h4>
+		<p ng-repeat="order in orders | limitTo: -3">{{ order.name }} purchased {{order.quantity}} {{order.product}}...({{order.date}} ago)</p>
+		<a href='#/orders'>show all orders</a>
+	</div>
+	<div class='row col-md-offset-4'>
+		<h4>New Customers</h4>
+		<ul>
+			<li ng-repeat='customer in customers | limitTo: -3'>{{customer.name}} joined the store. ({{customer.created_at}} ago)</li>
+		</ul>
+		<a href='#/customers'>show all customers</a>
+	</div>
+</div>

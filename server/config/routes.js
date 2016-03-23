@@ -24,4 +24,7 @@ module.exports = function(app){
 	app.post('/products', function(req, res){
 		products.create(req, res);
 	});
+	app.patch('/products', function(req, res){
+		products.update(req, res);
+	});
 }

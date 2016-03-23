@@ -89,6 +89,12 @@
 		 				callback();
 		 			});
 		 		};
+		 		factory.update = function(info, callback){
+		 			console.log('factory' + info.name + info.quantity)
+		 			$http.patch('/products', info).success(function(output){
+		 				callback();
+		 			});
+		 		}
 		 		return factory;
 		 	});
 
@@ -133,9 +139,13 @@
 		 		$scope.createOrder = function(){
 		 			// console.log($scope.newOrder.customer)
 		 			orderFactory.create($scope.newOrder, function(data){
+		 				// console.log($scope.newOrder.quantity + "quantity")
+		 				var info = {quantity: $scope.newOrder.quantity, name: $scope.newOrder.product};
 		 				$scope.newOrder = {};
-		 				orderFactory.index(function(data){
+		 				productFactory.update(info, function(data){
+		 					orderFactory.index(function(data){
 		 					$scope.orders = data;
+		 					});
 		 				});
 		 			});
 		 		}
@@ -154,6 +164,40 @@
 		 			});
 		 		}
 
+		 	})
+
+		 	myApp.controller('dashboardsController', function($scope, productFactory, orderFactory, customerFactory){
+		 		productFactory.index(function(data){
+		 			$scope.products = data;
+		 		});
+		 		orderFactory.index(function(data){
+		 			var currentDate = new Date;
+		 			$scope.orders = data;
+		 			for(var i=0; i<data.length; i++){
+		 				var orderDate = new Date(data[i].date);
+		 				if(currentDate.getDate()-orderDate.getDate() < 1){
+		 					var hour = currentDate.getHours() - orderDate.getHours();
+		 					data[i].date = hour + ' hours'
+		 				} else{
+		 					data[i].date = currentDate.getDate()-orderDate.getDate() + ' days'
+		 				};
+		 			}
+		 		});
+		 		customerFactory.index(function(data){
+		 			var currentDate = new Date;
+		 			for(var i=0; i<data.length; i++){
+		 				var orderDate = new Date(data[i].created_at);
+		 				if(currentDate.getDate()-orderDate.getDate() < 1){
+		 					var hour = currentDate.getHours() - orderDate.getHours();
+		 					// console.log(currentDate + "------" + orderDate)
+		 					// console.log(currentDate.getHours() + "------" + orderDate.getHours())
+		 					data[i].created_at = hour + ' hours'
+		 				} else{
+		 					data[i].created_at = currentDate.getDate()-orderDate.getDate() + ' days'
+		 				};
+		 			}
+		 			$scope.customers = data;
+		 		});
 		 	})
 		 </script>
 	</head>

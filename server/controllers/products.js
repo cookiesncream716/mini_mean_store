@@ -21,6 +21,26 @@ module.exports = (function(){
 					res.json(results);
 				}
 			})
+		},
+		update: function(req, res){
+			console.log(req.body.name)
+			Product.findOne({name: req.body.name}, function(err, product){
+				var num=product.quantity - req.body.quantity;
+				console.log("qunatity= "+ num )
+				if(num < 0){
+					console.log('error - less than zero');
+				} else{
+					console.log("else" + num + product.name)
+					Product.update({name: product.name}, {quantity: num}, function(err, product){
+						console.log('updated quantity')
+					});
+				}
+			})
+			
+			// if(product.quantity - req.body.quantity > -1){
+				// console.log("product left")
+			// }
+			// Product.update({name: req.body.name}, {quantity: -= req.body.quantity})
 		}
 	};
 })();

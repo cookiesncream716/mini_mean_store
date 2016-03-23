@@ -23,11 +23,11 @@
 			<button ng-click='createProduct()' class='btn btn-primary'>Create</button>
 		</form>
 	</div>
-	<div class='col-md-8'>
-		<div ng-repeat='product in products | filter: filter_name' class='col-md-4'>
+	<!-- <div class='col-md-8'> -->
+		<div ng-repeat='product in products | filter: filter_name' class='col-md-3'>
 			<img src="{{ product.image }}">
 			<p>{{ product.name }}</p>
 			<p>({{ product.quantity }} left)</p>
 		</div>
-	</div>
+	<!-- </div> -->
 </div>
